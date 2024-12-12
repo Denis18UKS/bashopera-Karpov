@@ -5,7 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AdminController;
-
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 
@@ -23,11 +23,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::post('/events/create', [AdminController::class, 'createEvent'])->name('admin.events.create');
     Route::post('/events/update/{id}', [AdminController::class, 'updateEvent'])->name('admin.events.update');
-    Route::post('/events/delete/{id}', [AdminController::class, 'deleteEvent'])->name('admin.events.delete');
+    Route::delete('/events/delete/{id}', [AdminController::class, 'deleteEvent'])->name('admin.events.delete');
 
     Route::post('/news/create', [AdminController::class, 'createNews'])->name('admin.news.create');
     Route::post('/news/update/{id}', [AdminController::class, 'updateNews'])->name('admin.news.update');
-    Route::post('/news/delete/{id}', [AdminController::class, 'deleteNews'])->name('admin.news.delete');
+    Route::delete('/news/delete/{id}', [AdminController::class, 'deleteNews'])->name('admin.news.delete');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
